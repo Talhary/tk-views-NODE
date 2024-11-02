@@ -15,11 +15,17 @@ let browser = null;
 export const runTiktokBrowser = async () => {
   try {
     browser = await puppeteer.launch({
-      headless: true,
+     headless: chromium.headless,
       args: [
+        ...chromium.args,
         "--no-sandbox",
         "--disable-setuid-sandbox",
         `--window-size=${1280 + Math.floor(Math.random() * 50)},${800 + Math.floor(Math.random() * 50)}`,
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--disable-gpu',
       ],
       executablePath: await chromium.executablePath(),
     });
