@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok View Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>TikTok Video Watcher</h2>
+    <input type="text" id="tiktokUrl" placeholder="Enter TikTok URL" required>
+    <input type="number" id="views" placeholder="Number of Views" required>
+    <button onclick="watchVideo()">Watch Video</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    async function watchVideo() {
+      const tiktokUrl = document.getElementById('tiktokUrl').value;
+      const views = document.getElementById('views').value;
+      const resultElement = document.getElementById('result');
+
+      if (!tiktokUrl || !views) {
+        resultElement.textContent = "Please enter both the URL and the number of views.";
+        return;
+      }
+
+      try {
+        const response = await fetch(`/watch-video?url=${encodeURIComponent(tiktokUrl)}&views=${encodeURIComponent(views)}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          resultElement.textContent = data.message;
+        } else {
+          resultElement.textContent = data.error || "An error occurred.";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        resultElement.textContent = "An error occurred while watching the video.";
+      }
+    }
+  </script>
+</body>
+</html>
