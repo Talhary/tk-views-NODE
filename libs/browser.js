@@ -15,7 +15,7 @@ let browser = null;
 export const runTiktokBrowser = async () => {
   try {
     browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
